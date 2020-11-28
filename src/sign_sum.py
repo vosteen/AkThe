@@ -7,12 +7,12 @@ class SignSum:
         pass
 
     def permutation(self, n, l):
-        return [list(i) for i in list(permutations(range(5), 2)) if sorted(i) == list(i)]
+        return [list(i) for i in list(permutations(range(n), l)) if sorted(i) == list(i)]
 
-    def mpc_binary_and(self, perm: list) -> bool:
+    def mpc_binary_and(self, position: list, values: list) -> bool:
         bin_and = 1
-        for i in perm:
-            bin_and = mpc.and_(bin_and, i)
+        for i in position:
+            bin_and = mpc.and_(bin_and, values[i])
         return bin_and
 
     def sign_sum(self, n):
