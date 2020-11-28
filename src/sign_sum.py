@@ -9,10 +9,16 @@ class SignSum:
     def permutation(self, n, l):
         return [list(i) for i in list(permutations(range(n), l)) if sorted(i) == list(i)]
 
-    def mpc_binary_and(self, position: list, values: list) -> bool:
+    def mpc_binary_and(self, position: list, values: list):
         bin_and = 1
         for i in position:
             bin_and = mpc.and_(bin_and, values[i])
+        return bin_and
+
+    def mpc_prod(selfself, position: list, values: list):
+        bin_and = 1
+        for i in position:
+            bin_and = mpc.prod(bin_and, values[i])
         return bin_and
 
     def sign_sum(self, n):
