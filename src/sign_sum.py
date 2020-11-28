@@ -1,5 +1,4 @@
 from mpyc.runtime import mpc
-
 from itertools import permutations
 
 
@@ -16,5 +15,10 @@ class SignSum:
             bin_and = mpc.and_(bin_and, i)
         return bin_and
 
-    def sum(self, n, permutations):
-        pass
+    def sign_sum(self, n):
+        permutations = self.permutation(n, int(n / 2) + 1)
+        for element in permutations:
+            if self.mpc_binary_and(element) > 0:
+                return 1
+            else:
+                return -1
