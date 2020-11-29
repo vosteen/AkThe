@@ -1,55 +1,53 @@
 from mpyc.runtime import mpc
-from mpyc.seclists import seclist
 from itertools import permutations
+from random import randint
 
 
 def permutation(n, l):
     return [list(i) for i in list(permutations(range(n), l)) if sorted(i) == list(i)]
 
 
-async def mpc_prod(values, position, n):
+async def mpc_prod(position, rand_int, n):
     await mpc.start()
 
-    print(mpc.pid)
-
-    vec = [None]*n
+    vec_l = [None] * n
     for i in range(n):
         if mpc.pid == i:
-            vec[i] = values[i]
+            vec_l[i] = rand_int[i]
+    secint = mpc.SecInt(128)
+    result_type = secint()
 
-    secint = mpc.SecInt(42)
-    result_type = [secint()]
-    sec_vec = seclist([None]*n, secint)
-
-
+    sec_vec_l = [None] * n
     for i in range(n):
-        if mpc.pid == i:
-            sec_vec[i] = mpc.input([secint(v) for v in [vec[i]]] if mpc.pid == i else result_type, senders=0)
-
+        sec_vec_l[i] = mpc.input(secint(vec_l[0]) if mpc.pid == 0 else result_type, senders=0)
 
     t = []
     for element in position:
-        print(sec_vec[element])
-        t.append(sec_vec[element])
+        t.append(sec_vec_l[element])
 
-    erg = mpc.in_prod(*t)
+    for i in range(len(position) - 1):
+        pass
+
+    #  erg = mpc.in_prod(*t)
+    erg = mpc.prod(t, start=1)
 
     result = await mpc.output(erg)
-    print(result)
+
     await mpc.shutdown()
+
     return result
 
 
 async def main():
-    n = 3  # number of participants
-    values = [1, 0, 1]
+    n = 9  # number of participants
+    rand_int = [randint(0, 1)] * n
     permutations = permutation(n, int(n / 2) + 1)
     erg = -1
     for element in permutations:
-        temp = await mpc_prod(values, element, n)
+        temp = await mpc_prod(element, rand_int, n)
         if temp > 0:
             erg = 1
-            # break
+            break
 
     print(erg)
 
