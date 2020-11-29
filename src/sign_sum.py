@@ -67,19 +67,19 @@ async def main():
             pass
             # rand_int[i] = randint(0, 1)
 
+    rand_int = [1, 1, 0, 0]
     print("the following private data is protected:" + str(rand_int))
+
     permutations = permutation(n, int(n / 2) + 1)
     erg = -1
 
-    was_called = not n % 2 == 0
     for element in permutations:
+        print("permutation: ", element)
         prod_res = await mpc_prod(element, rand_int, n)
-        # if the
-        if prod_res > 0 and (was_called or randint(0, 1) == 0):
+        print("das kommt heraus: ", prod_res)
+        if prod_res > 0:
             erg = 1
             break
-        elif prod_res > 0:
-            was_called = True
     print(erg)
 
 
