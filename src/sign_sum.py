@@ -2,7 +2,8 @@ from mpyc.runtime import mpc
 
 
 @mpc.coroutine
-async def mpc_sum(n, input_bits):
+async def mpc_sum(input_bits):
+    n = len(input_bits)
     # prepare mpyc
     secint = mpc.SecInt()
     # distribute secret data
@@ -22,20 +23,19 @@ async def mpc_sum(n, input_bits):
 
 
 @mpc.coroutine
-async def mpc_signumsum(n, input_bits):
+async def mpc_signumsum(input_bits):
     # check if sum is larger than the half amount of participants
-    return mpc.lt(int(n / 2), mpc_sum(n, input_bits))
+    return mpc.sgn(mpc_sum(input_bits), l=2)
 
 
 async def main():
-    numberOfParticipants = 11
     # the distribution of the secret numers is done in the sum function
-    input_bits = [1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1]
+    input_bits = [1, 1, -1, -1, -1]
 
     await mpc.start()
-    erg = mpc_signumsum(numberOfParticipants, input_bits)
+    erg = mpc_signumsum(input_bits)
     result = await mpc.output(erg)
-    print("result of Sign(Sum()): ", "positive" if result == 1 else "negative")
+    print("result of Sign(Sum()): ", result)
     await mpc.shutdown()
 
 
