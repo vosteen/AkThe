@@ -2,7 +2,6 @@ from mpyc.runtime import mpc
 import time
 import random
 import pickle
-import sys
 import os
 
 
@@ -51,12 +50,10 @@ async def main(numberOfParticipants=2):
     mpc_start_time = time.time() - start_time
 
     calc_time_l = []
-    # for _ in range(3072):
     calc_start_time = time.time()
-
-    erg = mpc_signumsum(input_bits)
-    result = await mpc.output(erg)
-
+    for _ in range(3072):
+        erg = mpc_signumsum(input_bits)
+        result = await mpc.output(erg)
     calc_time = time.time() - calc_start_time
     calc_time_l.append(calc_time)
 
@@ -74,10 +71,9 @@ if __name__ == '__main__':
     else:
         start_time_d = {}
         calc_time_d = {}
-    print(start_time_d)
 
-    #number_of_participants = sys.argv[0]
-    number_of_participants = 20
+    # number_of_participants = sys.argv[0]
+    number_of_participants = 15
 
     mpc_start_time_, calc_time_ = mpc.run(main(number_of_participants))
     start_time_d[number_of_participants] = mpc_start_time_
