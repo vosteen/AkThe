@@ -1,80 +1,282 @@
-\documentclass{llncs}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{listings}
-\usepackage{tikz}
-\usepackage{epstopdf}
-\usepackage{multirow}
-\usepackage{todonotes}
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
 
-
-
-\title{Your Awesome Project Title}
-
-\author{Firstname Lastname\inst{1}}
-\institute{	University of L\"ubeck, Germany\\
-	\email{firstname.lastname@student.uni-luebeck.de}}
-
+\author{}
+\date{}
 
 \begin{document}
-\maketitle
 
+\hypertarget{header-n0}{%
+\section{\texorpdfstring{\(\Sigma\)ignum}{\textbackslash Sigmaignum}}\label{header-n0}}
 
-\begin{abstract}
-A short description of your project (150-250 words).
+\hypertarget{header-n2}{%
+\subsection{Abstract}\label{header-n2}}
 
-This document is intended as a guide to structure your project and to help you to document your work in a paper structure.
+todo
 
-\end{abstract}
+\hypertarget{header-n4}{%
+\subsection{Motivation}\label{header-n4}}
 
+:::info\\
+Know what you want to do and why that is interesting (maybe with bullet
+points). But do not write this section until you know what you actually
+have done so that the motivation fits your work.
 
+\begin{verbatim}
+○ Establish a research gap:
+    ■ What is the problem, the problem space (PD)?
+    ■ Why is the problem important that is covered in the thesis? What is the
+        problem?
+    ■ Why is it hard? What have others done?
+○ How do we tackle the problem?
+○ What are our hypothesis?
+○ What are our techniques? How do you prove that the solution we came up with 
+is a GOOD solution? How can you demonstrate that your solution works?
+○ What are our findings?
+○ (Definition of terms)
+○ (Description of remaining chapters)
+\end{verbatim}
 
-\section{Motivation}
-\todo[inline]{Know what you want to do and why that is interesting (maybe with bullet points). But do not write this section until you know what you actually have done so that the motivation fits your work.}
-
-To generate this pdf, you need a latex implementation. I recommend TeXstudio, but there are others. For your references (the .bib file) jabref is the only helpful editor I have used, but most publishers provide helpful bibtex references on their web sites.
-Refer to sections like this: Section~\ref{sec:background} and to references like this: Ristenpart et al.~\cite{Ristenpart_hey}. 
-
-
-We will stick to the following timeline:
+:::
 
 \begin{itemize}
-	\item 13.11.: Project goals and outline defined
-	\item 20.11.: Related work as well as detailed outline identified and described in report
-	\item 4.12.: At least 1/3 of your anticipated work should be completed and documented
-	\item 18.12.: At least 2/3 of your anticipated work should be completed and documented
-	\item 15.1.: All of your anticipated work should be completed and documented, including results and outcomes
-	\item 22.1. : Test presentation ready 
-	\item from 25.1.: Presentation of your project in class.
-	\item from 12.2.: Submission of final version of your report.
+\item
+  research gap
+
+  \begin{itemize}
+  \item
+    Spezielles Problem: \(sign\big(\sum_i(sign{(x_i)})\big)\)
+  \item
+    Verbund von zwei Garantien (DP/SMC)
+
+    \begin{itemize}
+    \item
+      aus vorhandener Froschung zu Datenschutz in maschine learning
+      motiviert (DP)
+    \item
+      Anwendung auf SMC für verteiltes Lernen
+    \end{itemize}
+  \item
+    macht Kooperation von mehreren Instituten mit geschützten Daten
+    möglich
+  \item
+    Schutz gegen
+
+    \begin{itemize}
+    \item
+      membership inference (und ähnliche) durch DP
+    \item
+      neidische Institutionen (SMPC)
+    \end{itemize}
+  \item
+    DP wird durch umgebendes Problem gewährleistet
+  \item
+    in dieser Art ungelöst -\/- das harte ist, das Zwischenergebnis zu
+    schützen
+  \end{itemize}
+\item
+  neuer Ansatz mir logischen Verundungen
+
+  \begin{itemize}
+  \item
+    erfüllt die Anforderungen
+  \end{itemize}
+\item
+  er läuft zuverlässig, ist jedoch sehr teuer
 \end{itemize}
 
-\section{Background}\label{sec:background}
-\todo[inline]{You should find and describe related work early on. Know what other people have done.}
+\hypertarget{header-n42}{%
+\subsection{Background}\label{header-n42}}
 
-\section{Work Description}
-Here you describe the work you have performed, problems you have solved and methods you have used. There is a fine balance between brevity and conciseness and ensuring that other people, if investing the time, would be able to reproduce your results given this description.
+:::info\\
+You should find and describe related work early on. Know what other
+people have done.
 
+\begin{verbatim}
+Problem Statement (ca. 1 - 4 pages):
+○ Related work (either here or before conclusion):
+■ Describe the field in general and how others have tried to solve this
+problem
+■ In which way is your way better for your hypothesis?
+○ Describe in detail the problem you are trying to solve
+○ (Hypothesis presentation?)
+Optional: Preliminaries
+○ Introduce concepts / frameworks that you in your thesis
+\end{verbatim}
 
+:::
 
-\section{Results}
-\todo[inline]{here you will present and discuss your outcomes: implementation results or measurements or other project outcomes}
+\begin{itemize}
+\item
+  SMPC
+\item
+  Optimizer/maschine learning/...?
+\item
+  MPyC
+\end{itemize}
 
-\subsection{Subsection 1}
-\begin{figure*}[t!]
-	\centering
-	\includegraphics[width=.99\linewidth]{images/examplepicture}
-	\caption{A picture that shows boxes and arrows.}
-	\label{fig:examplepicture}
-\end{figure*}
+\hypertarget{header-n55}{%
+\subsection{Work Description}\label{header-n55}}
 
+:::info\\
+Here you describe the work you have performed, problems you have solved
+and methods you have used. There is a fine balance between brevity and
+conciseness and ensuring that other people, if investing the time, would
+be able to reproduce your results given this description.
 
-Figure \ref{fig:examplepicture} contains an image.
+\begin{verbatim}
+Approach / Methodology:
+○ Methodology:
+■ How do you solve the problem (described in the problem statement)?
+○ System design:
+■ Requirements and specifications?
+■ Describe how you implemented your approach. If it is a software system
+give diagrams, relevant algorithms etc.
+○ System implementation
+■ Describe the methods that we use, in particular the external methods and
+tools (background)■
+Describe your approach to solving the problem. Describe any potential
+weaknesses of your approach
+Experiments:
+○ Experimental setup and design choices?:
+■ Describe how you implemented the experiments.
+■ Talk about the performance of the Azure instance during experiments
+○ Experimental implementation:
+■ Goal: try to make as concisely clear how you do you what you do
+■ Motivate your design choices
+■ Describe how you evaluated to show that your approach was successful.
+\end{verbatim}
 
-\section{Conclusion}
-\todo[inline]{TBD last}
+:::
 
-\bibliographystyle{alpha}
-%\bibliographystyle{splncs03}
-\bibliography{references}
+\begin{itemize}
+\item
+  wir lösen das Problem mit geschickter Umformulierung
+
+  \begin{itemize}
+  \item
+    Zusammenfassung von \(sign(\sum(b_i)))\) zu
+    \(\binom{n}{\lfloor\frac{n}{2}\rfloor+1}\) einzeln überprüfbare
+    logische Ausdrücken:
+
+    \begin{itemize}
+    \item
+      die Ausdrücke bestehen aus jeder Kombination von
+      \(\lfloor\frac{n}{2}\rfloor+1\) (etwas mehr als die Hälfte) der
+      Elemente, die miteinander verundet sind.
+    \item
+      Wenn der erste Ausdruck \(1\) ergibt, wird \textbf{1} als Ergebnis
+      zurückgegeben und das Evaluieren sofort abgebrochen.
+    \item
+      Bei negativem Ergebniss aller Läufe wird \textbf{-1}
+      zurückgegeben.
+    \end{itemize}
+  \end{itemize}
+\item
+  Voraussetzungen sind \(n\) Rechner/Prozesse, die in direkter
+  Kommunikation zueinander stehen
+\item
+  todo: Architektur kurz erläutern
+\item
+  Performanceanalyse mit Kommandizeilenprogramm \emph{multitime}
+\item
+  Evaluation durch Test und Gedanken
+\end{itemize}
+
+\hypertarget{header-n81}{%
+\subsection{\texorpdfstring{Results 🐧 }{Results 🐧 }}\label{header-n81}}
+
+:::info\\
+Here you will present and discuss your outcomes: implementation results
+or measurements or other project outcomes
+
+\begin{verbatim}
+Evaluation / Results:
+○ Data analysis
+○ Experimental results (objectively describe the results)
+Interpretations:
+○ Interpretation w.r.t. the hypothesis
+\end{verbatim}
+
+:::
+
+\begin{itemize}
+\item
+  Ergebnisse (Rohdatenbezug -\/- geht nur mit bis zu 11 Teilnehmern
+  realistisch, Laufzeit exponentiell,...)
+\item
+  Interpretation:
+
+  \begin{itemize}
+  \item
+    geht nur effizient für sehr kleine Personenkreise (\(\le 5\)) -\/-
+    dann aber gut
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{header-n94}{%
+\subsection{Conclusion}\label{header-n94}}
+
+:::info\\
+Conclusion:\\
+○ Summarize your thesis again as in the introduction. Describe how
+your\\
+evaluation revealed that your system is successful. Describe future work
+in \\
+this area.\\
+Future work:\\
+○ Open problems that should be worked on\\
+:::
+
+todo
+
+\hypertarget{header-n97}{%
+\subsection{Referenzen}\label{header-n97}}
+
 \end{document}
