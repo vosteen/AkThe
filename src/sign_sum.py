@@ -29,13 +29,34 @@ def prepare_list(input_bits):
     return sec_vec_l
 
 
+@mpc.coroutine
+async def mpc_minmax(placeholder_list):
+    secint = mpc.SecInt()
+    min_val, max_val = mpc.min_max(placeholder_list)
+    return min_val, max_val
+
+
+@mpc.coroutine
+async def check_inputs(placeholder_list):
+    min_val,max_val = mpc_minmax(placeholder_list)
+    lower_bound = mpc.ge(min_val, -1)
+    upper_bound = mpc.ge(1, max_val)
+
+    return lower_bound, upper_bound
+
+
 async def main():
     # specify the secret data
-    input_bits = [1, 1, 1, -1, -1]
+    input_bits = [0, 1, 1, -1, -1]
     # start mpc and connect parties
     await mpc.start()
     # distribute data to parties and prepare list of placeholders for it
     placeholder_list = prepare_list(input_bits)
+    # check if input is valid
+    lower_bound, upper_bound = check_inputs(placeholder_list)
+    lower_bound = await mpc.output(lower_bound)
+    upper_bound = await mpc.output(upper_bound)
+    assert lower_bound and upper_bound, "invalid inputs"
     # compute the sign of the sum of the secret data
     erg = mpc_signumsum(placeholder_list)
     # fetch the result
