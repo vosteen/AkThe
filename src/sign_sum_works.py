@@ -33,7 +33,7 @@ async def mpc_signumsum(input_bits):
     return mpc.sgn(mpc_sum(input_bits), l=2)
 
 
-async def main(numberOfParticipants=2):
+async def main(numberOfParticipants=2, rounds=1):
     # numberOfParticipants = 2
     # the distribution of the secret numbers is done in the sum function
     # input_bits = [1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1]
@@ -51,7 +51,8 @@ async def main(numberOfParticipants=2):
 
     calc_time_l = []
     calc_start_time = time.time()
-    for _ in range(3072):
+
+    for _ in range(rounds):
         erg = mpc_signumsum(input_bits)
         result = await mpc.output(erg)
     calc_time = time.time() - calc_start_time
@@ -65,21 +66,34 @@ async def main(numberOfParticipants=2):
 
 
 if __name__ == '__main__':
-    if os.path.isfile("start_time.p") and os.path.isfile("calc_time.p"):
-        start_time_d = pickle.load(open("start_time.p", "rb"))
-        calc_time_d = pickle.load(open("calc_time.p", "rb"))
+    start_file = "start_time_1-10000_p10.p"
+    calc_file = "calc_time_1-10000_p10.p"
+
+    if os.path.isfile(start_file) and os.path.isfile(calc_file):
+        start_time_d = pickle.load(open(start_file, "rb"))
+        calc_time_d = pickle.load(open(calc_file, "rb"))
     else:
         start_time_d = {}
         calc_time_d = {}
 
     # number_of_participants = sys.argv[0]
-    number_of_participants = 15
+    number_of_participants = 10
 
-    mpc_start_time_, calc_time_ = mpc.run(main(number_of_participants))
-    start_time_d[number_of_participants] = mpc_start_time_
-    calc_time_d[number_of_participants] = calc_time_
+    # calc_rounds_list=list(range(1,10))
+    calc_rounds_list = list(range(1, 100))
+    calc_rounds_list = calc_rounds_list + list(range(100, 1000, 100))
+    calc_rounds_list = calc_rounds_list + list(range(1000, 10000, 1000))
 
-    pickle.dump(start_time_d, open("start_time.p", "wb+"))
-    pickle.dump(calc_time_d, open("calc_time.p", "wb+"))
+    # start_time_d[number_of_participants] = mpc_start_time_
+    # calc_time_d[number_of_participants] = calc_time_
+    for i in calc_rounds_list:
+        print("start calc, rounds:", i)
+        mpc_start_time_, calc_time_ = mpc.run(main(number_of_participants, rounds=i))
+        start_time_d[i] = mpc_start_time_
+        calc_time_d[i] = calc_time_
+        pickle.dump(start_time_d, open(start_file, "wb+"))
+        pickle.dump(calc_time_d, open(calc_file, "wb+"))
+        print("end writing")
 
-    print(start_time_d)
+    # pickle.dump(start_time_d, open(start_file, "wb+"))
+    # pickle.dump(calc_time_d, open(calc_file, "wb+"))
