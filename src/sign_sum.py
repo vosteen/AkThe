@@ -1,5 +1,6 @@
 from mpyc.runtime import mpc
 import math
+import random
 
 
 @mpc.coroutine
@@ -29,9 +30,14 @@ def prepare_list(input_bits):
     return sec_vec_l
 
 
-async def main():
+async def main(numberOfParticipants=2):
     # specify the secret data
-    input_bits = [1, 1, 1, -1, -1]
+    # input_bits = [1, 1, 1, -1, -1]
+    input_bits = []
+    for i in range(numberOfParticipants):
+        rnd = random.randint(-1, 1)
+        input_bits.append(rnd)
+
     # start mpc and connect parties
     await mpc.start()
     # distribute data to parties and prepare list of placeholders for it
